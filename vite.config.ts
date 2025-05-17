@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
       targets: [
         {
           src: "dist/index.html",
-          dest: ".",
+          dest: "dist",
           rename: "404.html", // Optional: helps with SPA routing fallback
         },
       ],
