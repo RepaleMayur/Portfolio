@@ -2,10 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import { viteStaticCopy } from 'vite-plugin-static-copy'; // add this plugin
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig(({ mode }) => ({
-  base: "/Portfolio/",
+  base: "/Portfolio/", // ✅ Required for GitHub Pages to find assets
   server: {
     host: "::",
     port: 8080,
@@ -16,12 +16,12 @@ export default defineConfig(({ mode }) => ({
     viteStaticCopy({
       targets: [
         {
-          src: 'dist/index.html',
-          dest: '.', // This will copy index.html to 404.html after build
-          rename: '404.html'
-        }
-      ]
-    })
+          src: "dist/index.html",
+          dest: ".",
+          rename: "404.html", // Optional: helps with SPA routing fallback
+        },
+      ],
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {
