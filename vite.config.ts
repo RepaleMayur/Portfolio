@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig(({ mode }) => ({
-  base: "/Portfolio/", // ✅ Required for GitHub Pages to find assets
+  base: mode === "production" ? "/Portfolio/" : "/",  // <-- key line
   server: {
     host: "::",
     port: 8080,
@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
         {
           src: "dist/index.html",
           dest: "dist",
-          rename: "404.html", // Optional: helps with SPA routing fallback
+          rename: "404.html",
         },
       ],
     }),

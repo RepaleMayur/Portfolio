@@ -1,4 +1,3 @@
-
 import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 
@@ -8,18 +7,17 @@ const LoadingScreen = ({ onLoadingComplete }: { onLoadingComplete: () => void })
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(timer);
-          onLoadingComplete();
-          return 100;
-        }
-        return prevProgress + 1;
-      });
+      setProgress((prev) => Math.min(prev + 1, 100));
     }, 50);
 
     return () => clearInterval(timer);
-  }, [onLoadingComplete]);
+  }, []);
+
+  useEffect(() => {
+    if (progress === 100) {
+      onLoadingComplete();
+    }
+  }, [progress, onLoadingComplete]);
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900 via-background to-background">
@@ -33,8 +31,11 @@ const LoadingScreen = ({ onLoadingComplete }: { onLoadingComplete: () => void })
               style={{
                 opacity: progress > index * 10 ? 1 : 0.2,
                 transition: "opacity 0.5s ease",
-                animation: progress > index * 10 ? "float 3s ease-in-out infinite" : "none",
-                animationDelay: `${index * 0.1}s`
+                animationName: progress > index * 10 ? "float" : "none",
+                animationDuration: progress > index * 10 ? "3s" : "0s",
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: progress > index * 10 ? "infinite" : "0",
+                animationDelay: `${index * 0.1}s`,
               }}
             >
               {letter}
@@ -45,18 +46,17 @@ const LoadingScreen = ({ onLoadingComplete }: { onLoadingComplete: () => void })
 
       <div className="relative w-[300px] mb-8">
         <div className="absolute inset-0 blur-lg bg-blue-500/20" />
-        <Progress 
-          value={progress} 
+        <Progress
+          value={progress}
           className="h-2 relative"
           style={{
-            background: "linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(59,130,246,0.1) 100%)",
+            background:
+              "linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(59,130,246,0.1) 100%)",
           }}
         />
       </div>
 
-      <p className="text-lg text-blue-200/80 font-medium tracking-wider">
-        {progress}%
-      </p>
+      <p className="text-lg text-blue-200/80 font-medium tracking-wider">{progress}%</p>
     </div>
   );
 };

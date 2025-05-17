@@ -11,7 +11,7 @@ const experiences = [
       "Designed and implemented backend services and APIs, optimizing performance and reducing latency by 20%. Integrated third-party services and APIs, increasing functionality and improving data flow, resulting in a 15% boost in operational efficiency. Led the migration of legacy systems to modern architectures, reducing technical debt by 30% and improving system maintainability by 25%.",
   },
   {
-    title: "Software Engineer",
+    title: "Software Engineer ",
     company: "Mulika Infotech Pvt. Ltd",
     period: "2022 - 2024",
     description:
