@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/Portfolio/" : "/",  // <-- key line
+  base: mode === "production" ? "/portfolio/" : "/",  // <-- key line
   server: {
     host: "::",
     port: 8080,
