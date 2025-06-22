@@ -74,6 +74,30 @@ const projects = [
       "Tool that merges multiple PDFs into a single document, enabling efficient report generation and archiving.",
     tech: ["Python", "PyPDF2"],
     link: "#"
+  },
+  {
+    title: "Scorecard Dashboard",
+    company: "Knova One",
+    description:
+      "Developed a PHP-based internal scorecard dashboard with performance charts, ranking logic, and export features.",
+    tech: ["PHP", "JavaScript", "MySQL"],
+    link: "#"
+  },
+  {
+    title: "PDF Splitter & Renamer",
+    company: "Knova One",
+    description:
+      "Standalone Python `.exe` utility that splits multipage PDFs into single-page documents and renames them based on extracted file numbers.",
+    tech: ["Python", "PyMuPDF", "Tkinter", "Regex"],
+    link: "#"
+  },
+  {
+    title: "Advanced PDF Redactor (In Progress)",
+    company: "Knova One",
+    description:
+      "Currently building a refined `.exe` app for advanced PDF redaction using intelligent pattern detection and batch processing.",
+    tech: ["Python", "PyMuPDF", "Regex"],
+    link: "#"
   }
 ];
 

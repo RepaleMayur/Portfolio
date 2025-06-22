@@ -27,7 +27,7 @@ const LoadingScreen = ({ onLoadingComplete }: { onLoadingComplete: () => void })
           {letters.map((letter, index) => (
             <span
               key={index}
-              className="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
+              className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-widest drop-shadow-md text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
               style={{
                 opacity: progress > index * 10 ? 1 : 0.2,
                 transition: "opacity 0.5s ease",
