@@ -5,8 +5,8 @@
   "homepage": "https://RepaleMayur.github.io/Portfolio",
   "type": "module",
   "scripts": {
+    "build": "vite build && node postbuild.mjs",
     "predeploy": "npm run build",
-    "build": "vite build && node postbuild.js",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

@@ -1,4 +1,3 @@
-// postbuild.js
 import fs from 'fs-extra';
 
 try {
