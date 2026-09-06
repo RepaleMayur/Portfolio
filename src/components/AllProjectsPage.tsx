@@ -145,7 +145,14 @@ export const AllProjectsPage: React.FC<AllProjectsPageProps> = ({ onBackToHome }
                       projectTitle={proj.title}
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-950/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-[#09090B]/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-end pointer-events-none">
+                    <span className="font-mono text-xs text-purple-400 font-bold uppercase tracking-widest mb-2">
+                      {proj.category}
+                    </span>
+                    <p className="font-mono text-xs sm:text-sm text-white/90 max-w-xl leading-relaxed">
+                      {proj.description}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Description & Structured Metadata Details */}

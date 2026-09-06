@@ -83,11 +83,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
                       projectTitle={proj.title}
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end pointer-events-none">
-                    <span className="font-mono text-xs text-purple-400 font-bold uppercase tracking-widest mb-1.5">
+                  <div className="absolute inset-0 bg-[#09090B]/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-end pointer-events-none">
+                    <span className="font-mono text-xs text-purple-400 font-bold uppercase tracking-widest mb-2">
                       {proj.category}
                     </span>
-                    <p className="font-mono text-xs text-white/90 max-w-xl leading-relaxed">
+                    <p className="font-mono text-xs sm:text-sm text-white/90 max-w-xl leading-relaxed">
                       {proj.description}
                     </p>
                   </div>
