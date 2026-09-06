@@ -45,19 +45,9 @@ export const AnimosSpreadRowsCode: React.FC = () => {
   const loopRow1 = [...SKILLS_ROW_1, ...SKILLS_ROW_1, ...SKILLS_ROW_1, ...SKILLS_ROW_1];
   const loopRow2 = [...SKILLS_ROW_2, ...SKILLS_ROW_2, ...SKILLS_ROW_2, ...SKILLS_ROW_2];
 
-  const renderCard = (skill: Skill, idx: number, floatOffset: number) => (
-    <motion.div
+  const renderCard = (skill: Skill, idx: number) => (
+    <div
       key={`${skill.name}-${idx}`}
-      animate={{
-        y: [0, floatOffset, 0, -floatOffset, 0]
-      }}
-      transition={{
-        duration: 3.5,
-        repeat: Infinity,
-        ease: 'easeInOut',
-        delay: (idx % 6) * 0.2
-      }}
-      whileHover={{ scale: 1.1, y: -4 }}
       className="flex-shrink-0 w-[140px] sm:w-[170px] bg-[#12141d] border border-[#D7E2EA]/15 rounded-2xl p-3 flex items-center gap-3 shadow-[0_10px_25px_rgba(0,0,0,0.6)] hover:border-[#B600A8] hover:shadow-[0_10px_25px_rgba(182,0,168,0.35)] transition-all duration-300 group cursor-pointer"
     >
       <div className="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center">
@@ -65,6 +55,7 @@ export const AnimosSpreadRowsCode: React.FC = () => {
           src={skill.image}
           alt={`${skill.name} icon`}
           className="w-full h-full object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300"
+          loading="lazy"
         />
       </div>
       <div className="flex flex-col text-left truncate">
@@ -75,7 +66,7 @@ export const AnimosSpreadRowsCode: React.FC = () => {
           {skill.category}
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 
   return (
@@ -100,7 +91,7 @@ export const AnimosSpreadRowsCode: React.FC = () => {
           }}
           className="flex gap-4 whitespace-nowrap w-max"
         >
-          {loopRow1.map((skill, idx) => renderCard(skill, idx, 5))}
+          {loopRow1.map((skill, idx) => renderCard(skill, idx))}
         </motion.div>
 
         {/* Row 2: Moves Right Continuously */}
@@ -115,7 +106,7 @@ export const AnimosSpreadRowsCode: React.FC = () => {
           }}
           className="flex gap-4 whitespace-nowrap w-max"
         >
-          {loopRow2.map((skill, idx) => renderCard(skill, idx, -5))}
+          {loopRow2.map((skill, idx) => renderCard(skill, idx))}
         </motion.div>
 
       </div>

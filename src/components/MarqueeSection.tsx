@@ -102,12 +102,20 @@ export const MarqueeSection: React.FC = () => {
   const row2Cards = [...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3)];
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionTop = window.scrollY + rect.top;
-      const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.25;
-      setScrollOffset(offset);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (sectionRef.current) {
+            const rect = sectionRef.current.getBoundingClientRect();
+            const offset = (window.innerHeight - rect.top) * 0.2;
+            setScrollOffset(offset);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
