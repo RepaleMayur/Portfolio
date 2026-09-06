@@ -69,9 +69,9 @@ function renderVisualContent(projectId: string, number: string, title: string) {
    CANDIDATE → SCREENING → INTERVIEW → FEEDBACK → DECISION
    ========================================================================= */
 const RRIMSVisual: React.FC<{ number: string; title: string }> = () => (
-  <div className="relative w-full h-full p-6 flex flex-col justify-between items-center text-white/80">
+  <div className="relative w-full h-full p-4 sm:p-6 flex flex-col justify-between items-center text-white/80 overflow-hidden">
     {/* Cover Header Badge */}
-    <div className="w-full flex justify-between items-center border-b border-white/10 pb-3">
+    <div className="w-full flex justify-between items-center border-b border-white/10 pb-2.5 sm:pb-3">
       <span className="text-[10px] sm:text-xs text-purple-400 tracking-widest font-bold">
         01 // WORKFLOW ENGINE PIPELINE
       </span>
@@ -81,7 +81,7 @@ const RRIMSVisual: React.FC<{ number: string; title: string }> = () => (
     </div>
 
     {/* Connected Nodes Workflow Diagram */}
-    <div className="relative w-full max-w-xl my-auto py-4 flex items-center justify-between">
+    <div className="relative w-full max-w-xl my-auto py-2 sm:py-4 flex items-center justify-between">
       {/* SVG Connecting Vector Lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 500 100">
         <defs>
@@ -102,63 +102,63 @@ const RRIMSVisual: React.FC<{ number: string; title: string }> = () => (
       </svg>
 
       {/* 1. CANDIDATE */}
-      <div className="relative z-10 flex flex-col items-center gap-2 group-hover:scale-105 transition-transform">
-        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#13111C] border border-white/20 flex items-center justify-center shadow-lg">
-          <span className="text-[11px] font-bold text-white/70 font-mono">INGEST</span>
+      <div className="relative z-10 flex flex-col items-center gap-1.5 group-hover:scale-105 transition-transform">
+        <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-[#13111C] border border-white/20 flex items-center justify-center shadow-lg">
+          <span className="text-[9px] sm:text-[11px] font-bold text-white/70 font-mono">INGEST</span>
         </div>
-        <span className="text-[9px] sm:text-[10px] text-white/70 tracking-widest font-mono font-bold">CANDIDATE</span>
+        <span className="text-[8px] sm:text-[10px] text-white/70 tracking-widest font-mono font-bold">CANDIDATE</span>
       </div>
 
       {/* Arrow Indicator */}
-      <span className="relative z-10 text-[10px] text-purple-400 font-mono font-bold">→</span>
+      <span className="relative z-10 text-[9px] sm:text-[10px] text-purple-400 font-mono font-bold">→</span>
 
       {/* 2. SCREENING */}
-      <div className="relative z-10 flex flex-col items-center gap-2 group-hover:scale-105 transition-transform">
-        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1A132B] border border-purple-500/40 flex items-center justify-center shadow-lg">
-          <span className="text-[11px] font-bold text-purple-300 font-mono">EVAL</span>
+      <div className="relative z-10 flex flex-col items-center gap-1.5 group-hover:scale-105 transition-transform">
+        <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-[#1A132B] border border-purple-500/40 flex items-center justify-center shadow-lg">
+          <span className="text-[9px] sm:text-[11px] font-bold text-purple-300 font-mono">EVAL</span>
         </div>
-        <span className="text-[9px] sm:text-[10px] text-purple-400 tracking-widest font-mono font-bold">SCREENING</span>
+        <span className="text-[8px] sm:text-[10px] text-purple-400 tracking-widest font-mono font-bold">SCREENING</span>
       </div>
 
       {/* Arrow Indicator */}
-      <span className="relative z-10 text-[10px] text-purple-400 font-mono font-bold">→</span>
+      <span className="relative z-10 text-[9px] sm:text-[10px] text-purple-400 font-mono font-bold">→</span>
 
       {/* 3. INTERVIEW */}
-      <div className="relative z-10 flex flex-col items-center gap-2 group-hover:scale-110 transition-transform">
-        <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-purple-950/80 border-2 border-purple-500 flex items-center justify-center shadow-2xl">
-          <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping absolute" />
-          <span className="w-2.5 h-2.5 rounded-full bg-purple-300 relative z-10" />
+      <div className="relative z-10 flex flex-col items-center gap-1.5 group-hover:scale-110 transition-transform">
+        <div className="relative w-9 h-9 sm:w-13 sm:h-13 rounded-full bg-purple-950/80 border-2 border-purple-500 flex items-center justify-center shadow-2xl">
+          <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping absolute" />
+          <span className="w-2 h-2 rounded-full bg-purple-300 relative z-10" />
         </div>
-        <span className="text-[10px] sm:text-[11px] text-white font-mono font-bold tracking-widest">INTERVIEW</span>
+        <span className="text-[9px] sm:text-[11px] text-white font-mono font-bold tracking-widest">INTERVIEW</span>
       </div>
 
       {/* Arrow Indicator */}
-      <span className="relative z-10 text-[10px] text-purple-400 font-mono font-bold">→</span>
+      <span className="relative z-10 text-[9px] sm:text-[10px] text-purple-400 font-mono font-bold">→</span>
 
       {/* 4. FEEDBACK */}
-      <div className="relative z-10 flex flex-col items-center gap-2 group-hover:scale-105 transition-transform">
-        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#1A132B] border border-purple-500/40 flex items-center justify-center shadow-lg">
-          <span className="text-[11px] font-bold text-purple-300 font-mono">NOTES</span>
+      <div className="relative z-10 flex flex-col items-center gap-1.5 group-hover:scale-105 transition-transform">
+        <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-[#1A132B] border border-purple-500/40 flex items-center justify-center shadow-lg">
+          <span className="text-[9px] sm:text-[11px] font-bold text-purple-300 font-mono">NOTES</span>
         </div>
-        <span className="text-[9px] sm:text-[10px] text-purple-400 tracking-widest font-mono font-bold">FEEDBACK</span>
+        <span className="text-[8px] sm:text-[10px] text-purple-400 tracking-widest font-mono font-bold">FEEDBACK</span>
       </div>
 
       {/* Arrow Indicator */}
-      <span className="relative z-10 text-[10px] text-emerald-400 font-mono font-bold">→</span>
+      <span className="relative z-10 text-[9px] sm:text-[10px] text-emerald-400 font-mono font-bold">→</span>
 
       {/* 5. DECISION */}
-      <div className="relative z-10 flex flex-col items-center gap-2 group-hover:scale-105 transition-transform">
-        <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#13111C] border border-emerald-500/50 flex items-center justify-center shadow-lg">
-          <span className="text-[11px] font-bold text-emerald-400 font-mono">FINAL</span>
+      <div className="relative z-10 flex flex-col items-center gap-1.5 group-hover:scale-105 transition-transform">
+        <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-[#13111C] border border-emerald-500/50 flex items-center justify-center shadow-lg">
+          <span className="text-[9px] sm:text-[11px] font-bold text-emerald-400 font-mono">FINAL</span>
         </div>
-        <span className="text-[9px] sm:text-[10px] text-emerald-400 tracking-widest font-mono font-bold">DECISION</span>
+        <span className="text-[8px] sm:text-[10px] text-emerald-400 tracking-widest font-mono font-bold">DECISION</span>
       </div>
     </div>
 
     {/* Footer Status Pill */}
-    <div className="w-full flex justify-between items-center text-[10px] text-white/40 pt-3 border-t border-white/5 font-mono">
-      <span>WORKFLOW: CANDIDATE → SCREENING → INTERVIEW → FEEDBACK → DECISION</span>
-      <span className="text-purple-400 font-bold">STATUS: ACTIVE PIPELINE</span>
+    <div className="w-full hidden sm:flex justify-between items-center text-[10px] text-white/40 pt-2 sm:pt-3 border-t border-white/5 font-mono">
+      <span className="truncate max-w-[70%]">WORKFLOW: CANDIDATE → SCREENING → INTERVIEW → DECISION</span>
+      <span className="text-purple-400 font-bold flex-shrink-0">ACTIVE PIPELINE</span>
     </div>
   </div>
 );
