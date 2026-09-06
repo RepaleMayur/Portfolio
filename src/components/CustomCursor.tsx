@@ -8,13 +8,20 @@ export const CustomCursor: React.FC = () => {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Check if touch device
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-      setIsTouchDevice(true);
-      return;
-    }
+    // Check if touch device or mobile screen (< 768px)
+    const checkIsTouch = () => {
+      if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768) {
+        setIsTouchDevice(true);
+      } else {
+        setIsTouchDevice(false);
+      }
+    };
+
+    checkIsTouch();
+    window.addEventListener('resize', checkIsTouch);
 
     const updateMousePosition = (e: MouseEvent) => {
+      if (window.innerWidth < 768) return;
       setPosition({ x: e.clientX, y: e.clientY });
 
       // Detect hover target attributes or standard interactive elements
@@ -36,7 +43,10 @@ export const CustomCursor: React.FC = () => {
     };
 
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
-    return () => window.removeEventListener('mousemove', updateMousePosition);
+    return () => {
+      window.removeEventListener('mousemove', updateMousePosition);
+      window.removeEventListener('resize', checkIsTouch);
+    };
   }, []);
 
   if (isTouchDevice) return null;

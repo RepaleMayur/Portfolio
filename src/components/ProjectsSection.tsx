@@ -18,7 +18,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
       className="bg-[#09090B] text-[#D7E2EA] relative z-10 pt-24 pb-28 px-6 sm:px-10 md:px-16"
     >
       <div className="max-w-6xl mx-auto">
-        
+
         {/* Section Header */}
         <FadeIn delay={0.1} y={30} className="mb-16 sm:mb-20">
           <div className="flex items-center justify-between border-b border-white/10 pb-5">
@@ -69,13 +69,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
 
                 {/* Compact Landscape Abstract Visual Cover Showcase */}
                 <div
-                  className={`relative overflow-hidden rounded-2xl border border-white/15 bg-[#09090B] shadow-2xl transition-all duration-500 group-hover:border-purple-500/40 ${
-                    proj.layout === 'full'
+                  className={`relative overflow-hidden rounded-2xl border border-white/15 bg-[#09090B] shadow-2xl transition-all duration-500 group-hover:border-purple-500/40 ${proj.layout === 'full'
                       ? 'w-full h-[250px] sm:h-[340px] md:h-[380px]'
                       : proj.layout === 'right'
-                      ? 'w-full md:w-[82%] ml-auto h-[220px] sm:h-[300px] md:h-[340px]'
-                      : 'w-full md:w-[88%] h-[220px] sm:h-[300px] md:h-[340px]'
-                  }`}
+                        ? 'w-full md:w-[82%] ml-auto h-[220px] sm:h-[300px] md:h-[340px]'
+                        : 'w-full md:w-[88%] h-[220px] sm:h-[300px] md:h-[340px]'
+                    }`}
                 >
                   <div className="w-full h-full group-hover:scale-[1.02] transition-transform duration-700">
                     <ProjectCoverVisual
