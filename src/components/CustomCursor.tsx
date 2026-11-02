@@ -5,12 +5,19 @@ export const CustomCursor: React.FC = () => {
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [cursorText, setCursorText] = useState('');
   const [isHovered, setIsHovered] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(() => 
+    typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)
+  );
 
   useEffect(() => {
-    // Check if touch device or mobile screen (< 768px)
+    // If mobile device, do not attach global mouse listeners
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const checkIsTouch = () => {
-      if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768) {
+      if ('ontouchstart' in window || window.innerWidth < 768) {
         setIsTouchDevice(true);
       } else {
         setIsTouchDevice(false);

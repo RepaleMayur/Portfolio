@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Terminal, CornerDownLeft, Trash2, Layout, Cpu, ArrowRight } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { executeCLICommand } from '../data/cliCommands';
 import { soundFX } from '../utils/sound';
 
@@ -177,15 +176,17 @@ Type 'neofetch' for system overview, 'ask <question>' for AI agent, or 'help' fo
     }
 
     if (trimmed === 'sudo hire' || trimmed === 'hire') {
-      try {
-        confetti({
-          particleCount: 120,
-          spread: 80,
-          origin: { y: 0.6 },
-          colors: ['#A855F7', '#EC4899', '#3B82F6', '#10B981', '#F59E0B']
-        });
-        soundFX.playSuccess();
-      } catch {}
+      import('canvas-confetti')
+        .then(({ default: confetti }) => {
+          confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: { y: 0.6 },
+            colors: ['#A855F7', '#EC4899', '#3B82F6', '#10B981', '#F59E0B']
+          });
+        })
+        .catch(() => {});
+      soundFX.playSuccess();
     }
 
     if (trimmed === 'ask') {

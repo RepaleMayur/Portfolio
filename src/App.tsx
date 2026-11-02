@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
@@ -7,11 +7,13 @@ import { ServicesSection } from './components/ServicesSection';
 import { ExperienceSection } from './components/ExperienceSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ContactSection } from './components/ContactSection';
-import { AllProjectsPage } from './components/AllProjectsPage';
 import { SmoothScroll } from './components/SmoothScroll';
 import { CustomCursor } from './components/CustomCursor';
-import { CommandPalette } from './components/CommandPalette';
-import { TerminalCLI } from './components/TerminalCLI';
+
+// Lazy load heavy / deferred modals & pages to optimize initial mobile loading speed
+const AllProjectsPage = lazy(() => import('./components/AllProjectsPage').then(m => ({ default: m.AllProjectsPage })));
+const CommandPalette = lazy(() => import('./components/CommandPalette').then(m => ({ default: m.CommandPalette })));
+const TerminalCLI = lazy(() => import('./components/TerminalCLI').then(m => ({ default: m.TerminalCLI })));
 
 export function App() {
   const [currentView, setCurrentView] = useState<'home' | 'projects'>('home');
@@ -66,7 +68,9 @@ export function App() {
     return (
       <div className="bg-[#09090B] min-h-screen text-[#D7E2EA] font-sans selection:bg-purple-600 selection:text-white">
         <CustomCursor />
-        <AllProjectsPage onBackToHome={showHome} />
+        <Suspense fallback={<div className="min-h-screen bg-[#09090B]" />}>
+          <AllProjectsPage onBackToHome={showHome} />
+        </Suspense>
       </div>
     );
   }
@@ -78,15 +82,21 @@ export function App() {
         <CustomCursor />
 
         {/* COMMAND PALETTE (Ctrl+K) */}
-        <CommandPalette
-          isOpen={isPaletteOpen}
-          onClose={() => setIsPaletteOpen(false)}
-          onOpenTerminal={() => setIsTerminalOpen(true)}
-        />
+        {isPaletteOpen && (
+          <Suspense fallback={null}>
+            <CommandPalette
+              isOpen={isPaletteOpen}
+              onClose={() => setIsPaletteOpen(false)}
+              onOpenTerminal={() => setIsTerminalOpen(true)}
+            />
+          </Suspense>
+        )}
 
         {/* MAYUROS CLI TERMINAL */}
         {isTerminalOpen && (
-          <TerminalCLI onClose={() => setIsTerminalOpen(false)} />
+          <Suspense fallback={null}>
+            <TerminalCLI onClose={() => setIsTerminalOpen(false)} />
+          </Suspense>
         )}
 
         {/* MINIMAL CREATIVE STUDIO NAVBAR */}

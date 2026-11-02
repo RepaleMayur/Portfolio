@@ -102,9 +102,19 @@ export const MarqueeSection: React.FC = () => {
   const row2Cards = [...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3)];
 
   useEffect(() => {
-    let ticking = false;
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { rootMargin: '200px' }
+    );
 
+    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    let ticking = false;
     const handleScroll = () => {
+      if (!isVisible) return;
       if (!ticking) {
         window.requestAnimationFrame(() => {
           if (sectionRef.current) {
@@ -120,7 +130,11 @@ export const MarqueeSection: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const renderCodeCard = (card: CodeCard, idx: number) => (
