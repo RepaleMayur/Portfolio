@@ -95,15 +95,15 @@ const CODE_CARDS: CodeCard[] = [
 ];
 
 export const MarqueeSection: React.FC = () => {
-  // 4 Duplicate sets for continuous gapless loop across any screen size
-  const row1Cards = [...CODE_CARDS, ...CODE_CARDS, ...CODE_CARDS, ...CODE_CARDS];
+  // 2 Duplicate sets (12 cards) creates a seamless infinite loop while staying under Safari's 4096px GPU texture memory limit
+  const row1Cards = [...CODE_CARDS, ...CODE_CARDS];
   const reversed = [...CODE_CARDS].reverse();
-  const row2Cards = [...reversed, ...reversed, ...reversed, ...reversed];
+  const row2Cards = [...reversed, ...reversed];
 
   const renderCodeCard = (card: CodeCard, idx: number) => (
     <div
       key={idx}
-      className="flex-shrink-0 w-[290px] xs:w-[320px] sm:w-[420px] bg-[#11131a] border border-[#D7E2EA]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 font-mono text-[10.5px] sm:text-xs shadow-xl hover:border-[#B600A8]/60 hover:shadow-[0_0_30px_rgba(182,0,168,0.2)] transition-all duration-300 group select-none"
+      className="flex-shrink-0 w-[280px] xs:w-[310px] sm:w-[400px] bg-[#11131a] border border-[#D7E2EA]/15 rounded-xl sm:rounded-2xl p-3 sm:p-4.5 font-mono text-[10px] sm:text-xs shadow-lg hover:border-[#B600A8]/60 transition-colors duration-200 group select-none"
     >
       {/* Top Mac Window Controls & Tab Title */}
       <div className="flex items-center justify-between pb-2.5 sm:pb-3.5 mb-2.5 sm:mb-3 border-b border-[#D7E2EA]/10">

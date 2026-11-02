@@ -9,7 +9,7 @@ export const ContactSection: React.FC = () => {
   return (
     <section
       id="contact"
-      className="bg-[#09090B] text-[#D7E2EA] relative z-10 pt-20 sm:pt-28 md:pt-36 pb-16 px-6 sm:px-10 md:px-16"
+      className="bg-[#09090B] text-[#D7E2EA] relative z-10 pt-20 sm:pt-28 md:pt-36 pb-16 px-6 sm:px-10 md:px-16 section-deferred"
     >
       <div className="max-w-6xl mx-auto">
         

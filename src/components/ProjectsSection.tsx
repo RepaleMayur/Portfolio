@@ -15,7 +15,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
   return (
     <section
       id="projects"
-      className="bg-[#09090B] text-[#D7E2EA] relative z-10 pt-24 pb-28 px-6 sm:px-10 md:px-16"
+      className="bg-[#09090B] text-[#D7E2EA] relative z-10 pt-24 pb-28 px-6 sm:px-10 md:px-16 section-deferred"
     >
       <div className="max-w-6xl mx-auto">
 

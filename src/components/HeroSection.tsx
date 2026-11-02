@@ -19,8 +19,13 @@ export const HeroSection: React.FC = () => {
       ref={containerRef}
       className="relative min-h-0 sm:min-h-screen bg-[#09090B] text-[#D7E2EA] z-10 flex flex-col justify-start sm:justify-between px-4 sm:px-10 md:px-14 pt-20 pb-12 sm:py-10 md:py-14 overflow-x-hidden gap-6 sm:gap-0"
     >
-      {/* Background Subtle Ambient Lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-purple-900/20 via-fuchsia-900/10 to-transparent blur-[140px] pointer-events-none z-0"></div>
+      {/* Background Subtle Ambient Lighting (Hardware Radial Gradient - 0ms filter cost) */}
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(147, 51, 234, 0.16) 0%, rgba(192, 38, 211, 0.08) 45%, transparent 70%)'
+        }}
+      />
 
       {/* Top Editorial Row */}
       <motion.div

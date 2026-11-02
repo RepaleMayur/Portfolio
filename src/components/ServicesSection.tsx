@@ -25,7 +25,7 @@ export const ServicesSection: React.FC = () => {
   return (
     <section
       id="stack"
-      className="bg-[#F4F4F6] text-[#0C0C0C] relative z-10 pt-20 sm:pt-28 pb-10 sm:pb-16 px-6 sm:px-10 md:px-16 transition-colors duration-500"
+      className="bg-[#F4F4F6] text-[#0C0C0C] relative z-10 pt-20 sm:pt-28 pb-10 sm:pb-16 px-6 sm:px-10 md:px-16 transition-colors duration-500 section-deferred"
     >
       <div className="max-w-6xl mx-auto">
 

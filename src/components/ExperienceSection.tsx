@@ -56,7 +56,7 @@ export const ExperienceSection: React.FC = () => {
   return (
     <section
       id="experience"
-      className="bg-[#F4F4F6] text-[#0C0C0C] relative z-10 pt-10 sm:pt-16 pb-28 sm:pb-36 px-6 sm:px-10 md:px-16"
+      className="bg-[#F4F4F6] text-[#0C0C0C] relative z-10 pt-10 sm:pt-16 pb-28 sm:pb-36 px-6 sm:px-10 md:px-16 section-deferred"
     >
       <div className="max-w-6xl mx-auto">
 
