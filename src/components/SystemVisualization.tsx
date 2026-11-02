@@ -5,6 +5,8 @@ export const SystemVisualization: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
+  const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024));
+
   // Handle subtle mouse parallax movement over network container
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -52,7 +54,7 @@ export const SystemVisualization: React.FC = () => {
             stroke={isHovered ? 'rgba(182, 0, 168, 0.4)' : 'rgba(255, 255, 255, 0.15)'}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={isMobile ? false : { pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
             viewport={{ once: true, margin: '250px' }}
             transition={{ duration: 0.4, delay: 0.05 }}
@@ -65,7 +67,7 @@ export const SystemVisualization: React.FC = () => {
             stroke={isHovered ? 'rgba(182, 0, 168, 0.4)' : 'rgba(255, 255, 255, 0.15)'}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={isMobile ? false : { pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
             viewport={{ once: true, margin: '250px' }}
             transition={{ duration: 0.4, delay: 0.08 }}
@@ -78,7 +80,7 @@ export const SystemVisualization: React.FC = () => {
             stroke={isHovered ? 'rgba(182, 0, 168, 0.4)' : 'rgba(255, 255, 255, 0.15)'}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={isMobile ? false : { pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
             viewport={{ once: true, margin: '250px' }}
             transition={{ duration: 0.4, delay: 0.1 }}
@@ -91,7 +93,7 @@ export const SystemVisualization: React.FC = () => {
             stroke={isHovered ? 'rgba(182, 0, 168, 0.4)' : 'rgba(255, 255, 255, 0.15)'}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={isMobile ? false : { pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
             viewport={{ once: true, margin: '250px' }}
             transition={{ duration: 0.4, delay: 0.12 }}
@@ -124,7 +126,7 @@ export const SystemVisualization: React.FC = () => {
               fill="#09090B"
               stroke="rgba(255, 255, 255, 0.5)"
               strokeWidth="1.5"
-              initial={{ opacity: 0 }}
+              initial={isMobile ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '250px' }}
               transition={{ duration: 0.3, delay: 0.05 }}
@@ -148,7 +150,7 @@ export const SystemVisualization: React.FC = () => {
               fill="#09090B"
               stroke="rgba(255, 255, 255, 0.5)"
               strokeWidth="1.5"
-              initial={{ opacity: 0 }}
+              initial={isMobile ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '250px' }}
               transition={{ duration: 0.3, delay: 0.08 }}
@@ -172,7 +174,7 @@ export const SystemVisualization: React.FC = () => {
               fill="#09090B"
               stroke="rgba(255, 255, 255, 0.5)"
               strokeWidth="1.5"
-              initial={{ opacity: 0 }}
+              initial={isMobile ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '250px' }}
               transition={{ duration: 0.3, delay: 0.1 }}
@@ -196,7 +198,7 @@ export const SystemVisualization: React.FC = () => {
               fill="#09090B"
               stroke="rgba(255, 255, 255, 0.5)"
               strokeWidth="1.5"
-              initial={{ opacity: 0 }}
+              initial={isMobile ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '250px' }}
               transition={{ duration: 0.3, delay: 0.12 }}
@@ -243,7 +245,7 @@ export const SystemVisualization: React.FC = () => {
               fill="#FFFFFF"
               stroke="#B600A8"
               strokeWidth="2"
-              initial={{ opacity: 0 }}
+              initial={isMobile ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3 }}
@@ -265,7 +267,7 @@ export const SystemVisualization: React.FC = () => {
 
         {/* Status Indicator Label */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={isMobile ? false : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.7 }}

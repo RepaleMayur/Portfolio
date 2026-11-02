@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 interface CodeCard {
   filename: string;
@@ -95,52 +95,15 @@ const CODE_CARDS: CodeCard[] = [
 ];
 
 export const MarqueeSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [scrollOffset, setScrollOffset] = useState(0);
-
-  const row1Cards = [...CODE_CARDS.slice(0, 3), ...CODE_CARDS.slice(0, 3), ...CODE_CARDS.slice(0, 3)];
-  const row2Cards = [...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3), ...CODE_CARDS.slice(3)];
-
-  useEffect(() => {
-    let isVisible = true;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-      },
-      { rootMargin: '200px' }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-
-    let ticking = false;
-    const handleScroll = () => {
-      if (!isVisible) return;
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (sectionRef.current) {
-            const rect = sectionRef.current.getBoundingClientRect();
-            const offset = (window.innerHeight - rect.top) * 0.2;
-            setScrollOffset(offset);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // 4 Duplicate sets for continuous gapless loop across any screen size
+  const row1Cards = [...CODE_CARDS, ...CODE_CARDS, ...CODE_CARDS, ...CODE_CARDS];
+  const reversed = [...CODE_CARDS].reverse();
+  const row2Cards = [...reversed, ...reversed, ...reversed, ...reversed];
 
   const renderCodeCard = (card: CodeCard, idx: number) => (
     <div
       key={idx}
-      className="flex-shrink-0 w-[300px] xs:w-[330px] sm:w-[440px] bg-[#11131a] border border-[#D7E2EA]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 font-mono text-[10.5px] sm:text-xs shadow-xl hover:border-[#B600A8]/60 hover:shadow-[0_0_30px_rgba(182,0,168,0.2)] transition-all duration-300 group"
+      className="flex-shrink-0 w-[290px] xs:w-[320px] sm:w-[420px] bg-[#11131a] border border-[#D7E2EA]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 font-mono text-[10.5px] sm:text-xs shadow-xl hover:border-[#B600A8]/60 hover:shadow-[0_0_30px_rgba(182,0,168,0.2)] transition-all duration-300 group select-none"
     >
       {/* Top Mac Window Controls & Tab Title */}
       <div className="flex items-center justify-between pb-2.5 sm:pb-3.5 mb-2.5 sm:mb-3 border-b border-[#D7E2EA]/10">
@@ -178,39 +141,32 @@ export const MarqueeSection: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} className="bg-[#0C0C0C] pt-20 sm:pt-32 pb-12 overflow-hidden border-t border-[#D7E2EA]/10">
-      
-      {/* Section Editorial Header Label */}
+    <section className="bg-[#0C0C0C] pt-20 sm:pt-32 pb-14 overflow-hidden border-t border-[#D7E2EA]/10 relative">
+      {/* Editorial Header Label */}
       <div className="text-center mb-6 sm:mb-8">
         <span className="inline-block px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-[#151515] border border-[#D7E2EA]/15 text-[#B600A8] text-[10px] sm:text-xs font-mono uppercase tracking-widest font-bold">
           SYSTEMS / CODE / ARCHITECTURE
         </span>
       </div>
 
-      <div className="flex flex-col gap-3 sm:gap-4">
-        
-        {/* Row 1: Moves RIGHT on scroll */}
-        <div
-          className="flex gap-3 sm:gap-4 whitespace-nowrap"
-          style={{
-            transform: `translateX(${scrollOffset - 180}px)`,
-            willChange: 'transform'
-          }}
-        >
-          {row1Cards.map((card, idx) => renderCodeCard(card, idx))}
+      {/* Smooth Side Gradient Vignettes */}
+      <div className="absolute left-0 top-20 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#0C0C0C] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-20 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#0C0C0C] to-transparent z-10 pointer-events-none"></div>
+
+      <div className="flex flex-col gap-3.5 sm:gap-4 overflow-hidden w-full">
+        {/* Row 1: Smooth Continuous Leftward Stream - Starts at 0% */}
+        <div className="overflow-hidden w-full">
+          <div className="animate-code-stream-left flex gap-3.5 sm:gap-4">
+            {row1Cards.map((card, idx) => renderCodeCard(card, idx))}
+          </div>
         </div>
 
-        {/* Row 2: Moves LEFT on scroll */}
-        <div
-          className="flex gap-3 sm:gap-4 whitespace-nowrap"
-          style={{
-            transform: `translateX(${-(scrollOffset - 180)}px)`,
-            willChange: 'transform'
-          }}
-        >
-          {row2Cards.map((card, idx) => renderCodeCard(card, idx))}
+        {/* Row 2: Smooth Continuous Rightward Stream - Starts at -50% to guarantee zero initial gap */}
+        <div className="overflow-hidden w-full">
+          <div className="animate-code-stream-right flex gap-3.5 sm:gap-4">
+            {row2Cards.map((card, idx) => renderCodeCard(card, idx))}
+          </div>
         </div>
-
       </div>
     </section>
   );

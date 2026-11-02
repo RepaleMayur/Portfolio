@@ -63,3 +63,43 @@ html.lenis, html.lenis body {
 ::-webkit-scrollbar-thumb:hover {
   background: #B600A8;
 }
+
+/* GPU-Accelerated Hardware-Composited Marquee Animations */
+@keyframes marquee-stream-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-stream-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-code-stream-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-stream-left 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-code-stream-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-stream-right 42s linear infinite;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .animate-code-stream-left:hover,
+  .animate-code-stream-right:hover {
+    animation-play-state: paused;
+  }
+}
