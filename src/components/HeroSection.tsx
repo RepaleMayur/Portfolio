@@ -17,7 +17,7 @@ export const HeroSection: React.FC = () => {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-0 sm:min-h-screen bg-[#09090B] text-[#D7E2EA] z-10 flex flex-col justify-start sm:justify-between px-4 sm:px-10 md:px-14 pt-20 pb-12 sm:py-10 md:py-14 overflow-hidden gap-6 sm:gap-0"
+      className="relative min-h-0 sm:min-h-screen bg-[#09090B] text-[#D7E2EA] z-10 flex flex-col justify-start sm:justify-between px-4 sm:px-10 md:px-14 pt-20 pb-12 sm:py-10 md:py-14 overflow-x-hidden gap-6 sm:gap-0"
     >
       {/* Background Subtle Ambient Lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-purple-900/20 via-fuchsia-900/10 to-transparent blur-[140px] pointer-events-none z-0"></div>
@@ -59,10 +59,21 @@ export const HeroSection: React.FC = () => {
         </p>
 
         {/* Minimal Scroll Indicator */}
-        <div className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/60 flex items-center gap-2">
+        <button
+          onClick={() => {
+            const lenis = (window as unknown as { lenis?: { scrollTo: (target: unknown, opts?: unknown) => void } }).lenis;
+            const target = document.getElementById('about');
+            if (lenis && target) {
+              lenis.scrollTo(target, { duration: 1.2, offset: -20 });
+            } else {
+              target?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors flex items-center gap-2 cursor-pointer bg-transparent border-0"
+        >
           <span>SCROLL TO EXPLORE</span>
           <span className="animate-bounce">↓</span>
-        </div>
+        </button>
       </motion.div>
 
     </section>

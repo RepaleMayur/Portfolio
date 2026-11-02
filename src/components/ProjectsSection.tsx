@@ -20,7 +20,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
       <div className="max-w-6xl mx-auto">
 
         {/* Section Header */}
-        <FadeIn delay={0.1} y={30} className="mb-16 sm:mb-20">
+        <FadeIn delay={0.05} y={15} className="mb-16 sm:mb-20">
           <div className="flex items-center justify-between border-b border-white/10 pb-5">
             <h2 className="font-mono text-xs sm:text-sm uppercase tracking-widest text-white/50 font-bold">
               SELECTED WORK
@@ -33,8 +33,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onViewAllProje
 
         {/* Editorial Asymmetrical Featured Case Studies List */}
         <div className="space-y-28 sm:space-y-36 md:space-y-40">
-          {featuredProjects.map((proj, idx) => (
-            <FadeIn key={proj.id} delay={idx * 0.1} y={40}>
+          {featuredProjects.map((proj) => (
+            <FadeIn key={proj.id} delay={0.05} y={15}>
               <div
                 data-cursor="VIEW ↗"
                 className="group relative cursor-pointer"

@@ -54,8 +54,8 @@ export const SystemVisualization: React.FC = () => {
             strokeDasharray="3 3"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true, margin: '250px' }}
+            transition={{ duration: 0.4, delay: 0.05 }}
           />
           <motion.line
             x1={center.x}
@@ -67,8 +67,8 @@ export const SystemVisualization: React.FC = () => {
             strokeDasharray="3 3"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true, margin: '250px' }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           />
           <motion.line
             x1={center.x}
@@ -80,8 +80,8 @@ export const SystemVisualization: React.FC = () => {
             strokeDasharray="3 3"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true, margin: '250px' }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           />
           <motion.line
             x1={center.x}
@@ -93,8 +93,8 @@ export const SystemVisualization: React.FC = () => {
             strokeDasharray="3 3"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true, margin: '250px' }}
+            transition={{ duration: 0.4, delay: 0.12 }}
           />
 
           {/* Sequential Signal Pulse travelling along lines */}
@@ -126,8 +126,8 @@ export const SystemVisualization: React.FC = () => {
               strokeWidth="1.5"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true, margin: '250px' }}
+              transition={{ duration: 0.3, delay: 0.05 }}
             />
             <text
               x={topNode.x}
@@ -150,8 +150,8 @@ export const SystemVisualization: React.FC = () => {
               strokeWidth="1.5"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true, margin: '250px' }}
+              transition={{ duration: 0.3, delay: 0.08 }}
             />
             <text
               x={rightNode.x + 14}
@@ -174,8 +174,8 @@ export const SystemVisualization: React.FC = () => {
               strokeWidth="1.5"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true, margin: '250px' }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             />
             <text
               x={bottomNode.x}
@@ -198,8 +198,8 @@ export const SystemVisualization: React.FC = () => {
               strokeWidth="1.5"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              viewport={{ once: true, margin: '250px' }}
+              transition={{ duration: 0.3, delay: 0.12 }}
             />
             <text
               x={leftNode.x - 14}

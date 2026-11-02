@@ -20,17 +20,46 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window);
+    const duration = isMobile ? 0.6 : 0.9;
+    const offset = isMobile ? -60 : -70;
+
+    const lenis = (window as unknown as { lenis?: { scrollTo: (target: unknown, opts?: unknown) => void } }).lenis;
+    if (id === 'hero' || id === 'top') {
+      if (lenis) {
+        lenis.scrollTo(0, { duration });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+    const element = document.getElementById(id);
+    if (element) {
+      if (lenis) {
+        lenis.scrollTo(element, { duration, offset });
+      } else {
+        const targetY = element.getBoundingClientRect().top + window.pageYOffset + offset;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out px-4 sm:px-10 md:px-14 ${scrolled
-          ? 'py-4 bg-[#09090B]/85 backdrop-blur-md border-b border-white/10 shadow-2xl'
-          : 'py-6 bg-transparent border-b border-transparent'
+        ? 'py-4 bg-[#09090B]/85 backdrop-blur-md border-b border-white/10 shadow-2xl'
+        : 'py-6 bg-transparent border-b border-transparent'
         }`}
     >
       <nav className="flex items-center justify-between w-full max-w-7xl mx-auto">
         {/* Left: Brand Identity with live status dot */}
         <a
-          href="#"
+          href="#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection('hero');
+          }}
           data-cursor="HOME"
           className="group flex items-center gap-2 font-mono text-xs sm:text-sm font-bold tracking-widest uppercase text-white hover:opacity-80 transition-opacity"
         >
@@ -40,9 +69,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         {/* Right: Studio Links with Pixel-Perfect Vertical Roll Hover Effect */}
         <div className="flex items-center gap-3 sm:gap-8 md:gap-10 font-mono text-[11px] sm:text-xs uppercase tracking-widest">
           <button
-            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollToSection('projects')}
             data-cursor="WORK"
-            className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle bg-transparent border-0 cursor-pointer"
+            className="group relative h-6 overflow-hidden inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
             <div className="flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
               <span className="h-6 flex items-center leading-none text-white/70 group-hover:text-white transition-colors">
@@ -55,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </button>
 
           <button
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollToSection('about')}
             data-cursor="ABOUT"
             className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
@@ -70,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </button>
 
           <button
-            onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollToSection('experience')}
             data-cursor="CAREER"
             className="group relative h-6 overflow-hidden hidden md:inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
@@ -85,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </button>
 
           <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollToSection('contact')}
             data-cursor="HIRE"
             className="group relative h-6 overflow-hidden inline-block align-middle bg-transparent border-0 cursor-pointer"
           >

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Terminal, CornerDownLeft, Trash2, Layout, Cpu, ArrowRight } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { executeCLICommand } from '../data/cliCommands';
 import { soundFX } from '../utils/sound';
 
@@ -16,8 +17,95 @@ interface TerminalCLIProps {
   onClose?: () => void;
 }
 
+const MatrixRain: React.FC<{ onExit: () => void }> = ({ onExit }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 600);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 400);
+
+    const characters = '01MAYURREPALEFASTAPIPYTHONREACTPOSTGRES0123456789ABCDEFｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈ';
+    const fontSize = 14;
+    const columns = Math.max(1, Math.floor(width / fontSize));
+    const drops: number[] = Array(columns).fill(1);
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(10, 12, 16, 0.08)';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = characters[Math.floor(Math.random() * characters.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+
+        // Head of drop is bright white/green
+        if (Math.random() > 0.85) {
+          ctx.fillStyle = '#FFFFFF';
+        } else {
+          ctx.fillStyle = '#10B981';
+        }
+
+        ctx.fillText(text, x, y);
+
+        if (y > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onExit();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onExit]);
+
+  return (
+    <div
+      onClick={onExit}
+      className="absolute inset-0 z-20 bg-[#06080D] cursor-pointer flex flex-col justify-between overflow-hidden rounded-3xl"
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
+      <div className="relative z-30 p-3 sm:p-4 flex justify-between items-center text-xs font-mono bg-black/70 backdrop-blur-sm border-b border-emerald-500/30 text-emerald-400">
+        <span className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+          <span className="font-bold">MAYUROS MATRIX STREAM ACTIVE</span>
+        </span>
+        <button
+          onClick={onExit}
+          className="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-300 border border-emerald-500/40 text-[11px] transition-colors"
+        >
+          Exit (ESC)
+        </button>
+      </div>
+      <div className="relative z-30 p-2 text-center text-[10px] sm:text-xs font-mono text-emerald-400/80 bg-black/70 pointer-events-none">
+        Tap anywhere or press ESC to return to shell
+      </div>
+    </div>
+  );
+};
+
 export const TerminalCLI: React.FC<TerminalCLIProps> = ({ isFullScreen = false, onSwitchToVisual, onClose }) => {
   const [inputVal, setInputVal] = useState('');
+  const [isMatrixActive, setIsMatrixActive] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([
     {
       id: 1,
@@ -25,7 +113,7 @@ export const TerminalCLI: React.FC<TerminalCLIProps> = ({ isFullScreen = false, 
       response: {
         type: 'success',
         output: `PS C:\\Users\\MayurRepale> MayurOS PowerShell v7.4.1 [x64-Windows-System]
-Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experience.`
+Type 'neofetch' for system overview, 'ask <question>' for AI agent, or 'help' for commands.`
       },
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
@@ -49,7 +137,12 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
     // Auto-scroll window to center MayurOS terminal when opened
     const terminalEl = document.getElementById('terminal');
     if (terminalEl) {
-      terminalEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const lenis = (window as unknown as { lenis?: { scrollTo: (target: unknown, opts?: unknown) => void } }).lenis;
+      if (lenis) {
+        lenis.scrollTo(terminalEl, { duration: 1.2, offset: -40 });
+      } else {
+        terminalEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
     setTimeout(() => {
       inputRef.current?.focus();
@@ -71,9 +164,44 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
       }
     }
 
+    if (trimmed === 'matrix') {
+      setIsMatrixActive(true);
+      setInputVal('');
+      return;
+    }
+
     if (trimmed === 'clear') {
       setHistory([]);
       setInputVal('');
+      return;
+    }
+
+    if (trimmed === 'sudo hire' || trimmed === 'hire') {
+      try {
+        confetti({
+          particleCount: 120,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#A855F7', '#EC4899', '#3B82F6', '#10B981', '#F59E0B']
+        });
+        soundFX.playSuccess();
+      } catch {}
+    }
+
+    if (trimmed === 'ask') {
+      const res = executeCLICommand('ask');
+      setHistory(prev => [
+        ...prev,
+        {
+          id: Date.now(),
+          command: 'ask',
+          response: res,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ]);
+      setCmdHistory(prev => [...prev, 'ask']);
+      setHistoryIndex(-1);
+      setInputVal('ask why hire you?');
       return;
     }
 
@@ -121,14 +249,15 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
   };
 
   const quickPills = [
-    { label: '🎨 Launch GUI Portfolio (gui)', cmd: 'gui' },
-    { label: '❓ Help', cmd: 'help' },
-    { label: '⚡ Whoami', cmd: 'whoami' },
-    { label: '🚀 Skills Matrix', cmd: 'skills' },
+    { label: '🎨 Launch GUI', cmd: 'gui' },
+    { label: '💻 Neofetch', cmd: 'neofetch' },
+    { label: '🤖 Ask AI', cmd: 'ask' },
+    { label: '⚡ Skills Matrix', cmd: 'skills' },
     { label: '📦 Projects', cmd: 'projects' },
     { label: '🏢 Experience', cmd: 'experience' },
-    { label: '📫 Contact Info', cmd: 'contact' },
-    { label: '💼 Sudo Hire', cmd: 'sudo hire' }
+    { label: '🚀 Benchmark', cmd: 'benchmark' },
+    { label: '🟢 Matrix Rain', cmd: 'matrix' },
+    { label: '🎉 Sudo Hire', cmd: 'sudo hire' }
   ];
 
   return (
@@ -187,8 +316,11 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
       {/* Terminal Window Container */}
       <div
         onClick={() => inputRef.current?.focus()}
-        className="rounded-3xl bg-obsidian-900 border border-white/20 shadow-2xl overflow-hidden font-mono text-xs sm:text-sm shadow-indigo-950/50"
+        className="relative rounded-3xl bg-obsidian-900 border border-white/20 shadow-2xl overflow-hidden font-mono text-xs sm:text-sm shadow-indigo-950/50"
       >
+        {/* Matrix Rain Overlay */}
+        {isMatrixActive && <MatrixRain onExit={() => setIsMatrixActive(false)} />}
+
         {/* Top Window Bar */}
         <div className="px-4 py-3 bg-obsidian-950 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -265,6 +397,10 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
                       ? 'text-rose-400'
                       : item.response.type === 'info'
                       ? 'text-cyan-300'
+                      : item.response.type === 'warning'
+                      ? 'text-amber-400'
+                      : item.response.type === 'matrix'
+                      ? 'text-emerald-300 font-bold'
                       : 'text-slate-300'
                   }`}
                 >
@@ -283,7 +419,7 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Type 'gui' for visual mode, 'help' for commands..."
+              placeholder="Try 'neofetch', 'ask why hire you?', 'matrix', 'sudo hire'..."
               className="w-full bg-transparent border-none outline-none text-white font-mono placeholder:text-slate-600 focus:ring-0"
             />
             <button
@@ -303,9 +439,15 @@ Type 'help' to inspect commands or 'gui' to launch the Visual Portfolio experien
               key={idx}
               onClick={() => handleCommandSubmit(pill.cmd)}
               onMouseEnter={() => soundFX.playHover()}
-              className={`px-3 py-1 rounded-lg border text-xs font-mono transition-all ${
+              className={`px-3 py-1 rounded-lg border text-xs font-mono transition-all cursor-pointer ${
                 pill.cmd === 'gui'
                   ? 'bg-indigo-600 text-white border-indigo-500 font-semibold shadow-md shadow-indigo-500/30'
+                  : pill.cmd === 'sudo hire'
+                  ? 'bg-purple-600/20 border-purple-500/50 text-purple-300 hover:bg-purple-600/30 font-semibold shadow-md shadow-purple-500/20'
+                  : pill.cmd === 'matrix'
+                  ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-300 hover:bg-emerald-600/30 font-semibold shadow-md shadow-emerald-500/20'
+                  : pill.cmd === 'neofetch'
+                  ? 'bg-cyan-600/20 border-cyan-500/50 text-cyan-200 hover:bg-cyan-600/30 font-semibold'
                   : 'bg-white/5 border-white/10 hover:border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10'
               }`}
             >

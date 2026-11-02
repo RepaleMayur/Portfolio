@@ -55,7 +55,8 @@ export const AnimosSpreadRowsCode: React.FC = () => {
           src={skill.image}
           alt={`${skill.name} icon`}
           className="w-full h-full object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300"
-          loading="lazy"
+          loading="eager"
+          decoding="async"
         />
       </div>
       <div className="flex flex-col text-left truncate">

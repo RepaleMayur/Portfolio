@@ -61,7 +61,7 @@ export const ExperienceSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
 
         {/* Section Header */}
-        <FadeIn delay={0.1} y={30} className="mb-12 sm:mb-16">
+        <FadeIn delay={0.05} y={15} className="mb-12 sm:mb-16">
           <div className="flex items-center justify-between border-b border-black/15 pb-6">
             <h2 className="font-mono text-xs sm:text-sm uppercase tracking-widest text-black/50 font-bold">
               EXPERIENCE & TRACK RECORD
@@ -75,7 +75,7 @@ export const ExperienceSection: React.FC = () => {
         {/* Editorial Borderless Timeline */}
         <div className="space-y-10 sm:space-y-16 mb-8 sm:mb-16">
           {EXPERIENCES.map((exp, idx) => (
-            <FadeIn key={exp.company} delay={idx * 0.15} y={40}>
+            <FadeIn key={exp.company} delay={Math.min(idx * 0.04, 0.1)} y={15}>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start border-b border-black/15 pb-8 sm:pb-12">
 
                 {/* WHEN — Timeline Badge */}

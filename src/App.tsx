@@ -64,7 +64,7 @@ export function App() {
 
   if (currentView === 'projects') {
     return (
-      <div className="bg-[#09090B] min-h-screen text-[#D7E2EA] font-sans overflow-x-clip selection:bg-purple-600 selection:text-white">
+      <div className="bg-[#09090B] min-h-screen text-[#D7E2EA] font-sans selection:bg-purple-600 selection:text-white">
         <CustomCursor />
         <AllProjectsPage onBackToHome={showHome} />
       </div>
@@ -73,7 +73,7 @@ export function App() {
 
   return (
     <SmoothScroll>
-      <div className="bg-[#09090B] min-h-screen text-[#D7E2EA] font-sans overflow-x-clip selection:bg-purple-600 selection:text-white">
+      <div className="bg-[#09090B] min-h-screen text-[#D7E2EA] font-sans selection:bg-purple-600 selection:text-white">
         {/* DESKTOP MINIMAL CUSTOM TRAILING CURSOR */}
         <CustomCursor />
 

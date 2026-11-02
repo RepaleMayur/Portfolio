@@ -18,25 +18,25 @@ export const ContactSection: React.FC = () => {
           
           {/* Left Side: Editorial CTA */}
           <div className="lg:col-span-7 flex flex-col select-none">
-            <FadeIn delay={0.1} y={40}>
+            <FadeIn delay={0.05} y={15}>
               <span className="font-black text-[12vw] sm:text-[10vw] lg:text-[7vw] uppercase tracking-tighter leading-[0.85] text-white">
                 HAVE A
               </span>
             </FadeIn>
 
-            <FadeIn delay={0.2} y={40}>
+            <FadeIn delay={0.08} y={15}>
               <span className="font-black text-[12vw] sm:text-[10vw] lg:text-[7vw] uppercase tracking-tighter leading-[0.85] text-white/40 pl-[8vw] lg:pl-[5vw]">
                 PROJECT
               </span>
             </FadeIn>
 
-            <FadeIn delay={0.3} y={40}>
+            <FadeIn delay={0.12} y={15}>
               <span className="font-black text-[12vw] sm:text-[10vw] lg:text-[7vw] uppercase tracking-tighter leading-[0.85] text-white">
                 IN MIND?
               </span>
             </FadeIn>
 
-            <FadeIn delay={0.4} y={40} className="mt-6">
+            <FadeIn delay={0.15} y={15} className="mt-6">
               <a
                 href="mailto:mayurrepale55@gmail.com"
                 data-cursor="OPEN ↗"
@@ -50,7 +50,7 @@ export const ContactSection: React.FC = () => {
 
           {/* Right Side: Interactive System Online Network Visualization (Desktop Only) */}
           <div className="hidden lg:flex lg:col-span-5 justify-end">
-            <FadeIn delay={0.3} y={40} className="w-full max-w-sm opacity-55 hover:opacity-90 transition-opacity duration-500">
+            <FadeIn delay={0.08} y={15} className="w-full max-w-sm opacity-55 hover:opacity-90 transition-opacity duration-500">
               <SystemVisualization />
             </FadeIn>
           </div>
@@ -58,7 +58,7 @@ export const ContactSection: React.FC = () => {
         </div>
 
         {/* Direct Contact Links Grid */}
-        <FadeIn delay={0.5} y={30} className="pt-10 sm:pt-12 border-t border-white/10 mb-16 sm:mb-24">
+        <FadeIn delay={0.05} y={15} className="pt-10 sm:pt-12 border-t border-white/10 mb-16 sm:mb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 font-mono text-xs sm:text-sm uppercase tracking-widest">
             <div>
               <span className="text-white/40 block mb-2 font-bold">EMAIL</span>

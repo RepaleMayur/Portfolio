@@ -9,7 +9,12 @@
   font-family: 'Kanit', sans-serif;
 }
 
-html, body, #root {
+html {
+  scroll-behavior: auto; /* Let Lenis control all scrolling */
+  overflow-x: clip;
+}
+
+body, #root {
   background-color: #0C0C0C;
   color: #D7E2EA;
   font-family: 'Kanit', sans-serif;
@@ -37,7 +42,7 @@ html.lenis, html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: clip;
 }
 
 .lenis.lenis-smooth iframe {

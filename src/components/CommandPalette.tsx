@@ -16,10 +16,29 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      // Only auto-focus on desktop devices with physical keyboards
+      // On mobile devices, auto-focus summons the virtual keyboard, hides quick actions,
+      // and causes viewport resizing / render freeze.
+      const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window);
+      if (!isMobile) {
+        setTimeout(() => inputRef.current?.focus(), 50);
+      }
+      // Lock background scrolling and pause Lenis while modal is open
+      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+      if (lenis) lenis.stop();
+      document.body.style.overflow = 'hidden';
     } else {
       setQuery('');
+      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+      if (lenis) lenis.start();
+      document.body.style.overflow = '';
     }
+
+    return () => {
+      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
+      if (lenis) lenis.start();
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -36,18 +55,41 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
   if (!isOpen) return null;
 
   const scrollToSection = (targetId: string) => {
+    // Dismiss mobile keyboard if active to prevent mobile viewport scroll lock
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    inputRef.current?.blur();
+
     onClose();
+
+    // Give browser time to dismiss keyboard and restore body overflow before scrolling
     setTimeout(() => {
+      const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window);
+      const duration = isMobile ? 0.6 : 0.9;
+      const offset = isMobile ? -60 : -70;
+
+      const lenis = (window as unknown as { lenis?: { scrollTo: (target: unknown, opts?: unknown) => void } }).lenis;
+
       if (targetId === 'hero') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        const el = document.getElementById(targetId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+        if (lenis) {
+          lenis.scrollTo(0, { duration });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      const el = document.getElementById(targetId);
+      if (el) {
+        if (lenis) {
+          lenis.scrollTo(el, { duration, offset });
+        } else {
+          const targetY = el.getBoundingClientRect().top + window.pageYOffset + offset;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
         }
       }
-      window.location.hash = `#${targetId}`;
-    }, 50);
+    }, 60);
   };
 
   const handleCopyEmail = () => {
@@ -81,20 +123,24 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-black/90 sm:bg-black/85 sm:backdrop-blur-md transition-opacity"
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-[#0c0d12] border border-white/20 rounded-3xl shadow-2xl overflow-hidden z-10 font-sans shadow-indigo-950/50">
+      <div className="relative w-full max-w-2xl bg-[#0c0d12] border border-white/20 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 font-sans shadow-indigo-950/50">
         
         {/* Search Bar */}
-        <div className="p-4 border-b border-white/10 flex items-center space-x-3 bg-[#06070a]">
+        <div className="p-3.5 sm:p-4 border-b border-white/10 flex items-center space-x-3 bg-[#06070a]">
           <Search className="w-5 h-5 text-indigo-400 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
             placeholder="Type a command or search projects, skills, contact..."
             className="w-full bg-transparent border-none outline-none text-white text-sm placeholder:text-slate-500 focus:ring-0"
           />
@@ -110,7 +156,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
         <div
           data-lenis-prevent
           onWheel={(e) => e.stopPropagation()}
-          className="p-3 max-h-96 overflow-y-auto space-y-4 custom-scrollbar text-xs bg-[#0c0d12]"
+          className="p-3 max-h-[75vh] sm:max-h-96 overflow-y-auto space-y-4 custom-scrollbar text-xs bg-[#0c0d12]"
         >
           
           {/* Quick Actions */}
@@ -121,10 +167,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                 <button
                   key={idx}
                   onClick={() => {
-                    soundFX.playClick();
+                    try { soundFX.playClick(); } catch {}
                     act.action();
                   }}
-                  className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-indigo-600/20 hover:border-indigo-500/30 border border-transparent text-slate-200 hover:text-white transition-all group text-left"
+                  className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-indigo-600/20 hover:border-indigo-500/30 border border-transparent text-slate-200 hover:text-white transition-all group text-left cursor-pointer"
                 >
                   <div className="flex items-center space-x-3">
                     {act.icon}
@@ -145,10 +191,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                   <button
                     key={p.id}
                     onClick={() => {
-                      soundFX.playClick();
+                      try { soundFX.playClick(); } catch {}
                       scrollToSection('projects');
                     }}
-                    className="w-full text-left flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-indigo-600/20 hover:border-indigo-500/30 border border-transparent text-slate-200 transition-all"
+                    className="w-full text-left flex items-center justify-between p-3 rounded-xl bg-white/[0.02] hover:bg-indigo-600/20 hover:border-indigo-500/30 border border-transparent text-slate-200 transition-all cursor-pointer"
                   >
                     <div>
                       <p className="font-semibold text-sm text-white">{p.title}</p>

@@ -30,7 +30,7 @@ export const ServicesSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
 
         {/* Section Header */}
-        <FadeIn delay={0.1} y={30} className="mb-16 sm:mb-20">
+        <FadeIn delay={0.05} y={15} className="mb-16 sm:mb-20">
           <div className="flex items-center justify-between border-b border-black/15 pb-6">
             <h2 className="font-mono text-xs sm:text-sm uppercase tracking-widest text-black/50 font-bold">
               TECHNOLOGY & CORE STACK
@@ -55,7 +55,7 @@ export const ServicesSection: React.FC = () => {
                   SUPPORTING SKILLS & FRAMEWORKS
                 </div>
               )}
-              <FadeIn delay={idx * 0.04} y={30}>
+              <FadeIn delay={Math.min(idx * 0.02, 0.08)} y={10}>
                 <div
                   data-cursor="STACK"
                   className={`group py-5 sm:py-7 border-t border-black/15 flex flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer transition-all duration-300 hover:px-4 ${

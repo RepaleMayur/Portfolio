@@ -54,7 +54,7 @@ export const AllProjectsPage: React.FC<AllProjectsPageProps> = ({ onBackToHome }
       {/* Main Container */}
       <main className="pt-32 sm:pt-40 px-6 sm:px-10 md:px-16 max-w-6xl mx-auto">
         {/* Title Header */}
-        <FadeIn delay={0.1} y={30} className="mb-12 sm:mb-16">
+        <FadeIn delay={0.05} y={15} className="mb-12 sm:mb-16">
           <div className="border-b border-white/10 pb-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
@@ -90,8 +90,8 @@ export const AllProjectsPage: React.FC<AllProjectsPageProps> = ({ onBackToHome }
 
         {/* Case Studies List */}
         <div className="space-y-20 sm:space-y-28">
-          {filteredProjects.map((proj, idx) => (
-            <FadeIn key={proj.id} delay={idx * 0.05} y={40}>
+          {filteredProjects.map((proj) => (
+            <FadeIn key={proj.id} delay={0.05} y={15}>
               <div
                 data-cursor="VIEW ↗"
                 className="group relative cursor-pointer"

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 
 interface SmoothScrollProps {
   children: React.ReactNode;
@@ -7,28 +8,43 @@ interface SmoothScrollProps {
 
 export const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   useEffect(() => {
-    // Disable Lenis on touch devices / mobile screens (< 768px) for native 60fps momentum scrolling
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768;
-    if (isTouch) return;
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-    });
-
-    let rafId: number;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
+    // Avoid browser native scroll restoration fighting smooth scroll at start
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
 
-    rafId = requestAnimationFrame(raf);
+    const lenis = new Lenis({
+      duration: 1.0,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false, // Leave touch gestures to native momentum scroll
+      autoRaf: true,
+      anchors: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    // Expose lenis globally for programmatic navigation
+    (window as unknown as Record<string, unknown>).lenis = lenis;
+
+    // Refresh scroll boundaries when images/fonts or layout updates
+    const handleResize = () => {
+      lenis.resize();
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('load', handleResize);
+
+    // Initial resize after mount to ensure accurate document height
+    const timer = setTimeout(() => {
+      lenis.resize();
+    }, 100);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('load', handleResize);
+      delete (window as unknown as Record<string, unknown>).lenis;
       lenis.destroy();
     };
   }, []);
