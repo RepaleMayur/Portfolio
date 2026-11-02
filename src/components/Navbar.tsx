@@ -39,10 +39,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
         {/* Right: Studio Links with Pixel-Perfect Vertical Roll Hover Effect */}
         <div className="flex items-center gap-3 sm:gap-8 md:gap-10 font-mono text-[11px] sm:text-xs uppercase tracking-widest">
-          <a
-            href="#projects"
+          <button
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             data-cursor="WORK"
-            className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle"
+            className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
             <div className="flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
               <span className="h-6 flex items-center leading-none text-white/70 group-hover:text-white transition-colors">
@@ -52,12 +52,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 VIEW WORK ↗
               </span>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#about"
+          <button
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             data-cursor="ABOUT"
-            className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle"
+            className="group relative h-6 overflow-hidden hidden sm:inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
             <div className="flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
               <span className="h-6 flex items-center leading-none text-white/70 group-hover:text-white transition-colors">
@@ -67,12 +67,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 KNOW ME ↗
               </span>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#experience"
+          <button
+            onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
             data-cursor="CAREER"
-            className="group relative h-6 overflow-hidden hidden md:inline-block align-middle"
+            className="group relative h-6 overflow-hidden hidden md:inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
             <div className="flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
               <span className="h-6 flex items-center leading-none text-white/70 group-hover:text-white transition-colors">
@@ -82,12 +82,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 TIMELINE ↗
               </span>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#contact"
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             data-cursor="HIRE"
-            className="group relative h-6 overflow-hidden inline-block align-middle"
+            className="group relative h-6 overflow-hidden inline-block align-middle bg-transparent border-0 cursor-pointer"
           >
             <div className="flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
               <span className="h-6 flex items-center leading-none text-white/70 group-hover:text-white transition-colors">
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 LET&apos;S TALK ↗
               </span>
             </div>
-          </a>
+          </button>
 
           {/* Command Palette Trigger Button (Visible on Mobile & Desktop) */}
           <button
